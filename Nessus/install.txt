@@ -1,0 +1,11 @@
+1. Download Nessus essentials .deb package
+
+2. commands
+    > sudo dpkg -i <Nessus package.deb>
+    > sudo systemctl start nessusd
+    
+3. Navigate to https://<server ip>:8843 on browser
+
+4. Select Nessus Essentials Trial > Enter Activation Key
+
+5. wait 7 hours for plugins to install
