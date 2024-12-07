@@ -1,3 +1,3 @@
 # homeserv-sec
 
-A repo for documenting the installed security/monitoring tools and maintenance of my home server.
+A repo for documenting the installation process, configuration, and maintenance of security and monitoring tools on my home server.
