@@ -11,7 +11,7 @@
 ## SSH
 - set PermitRootLogin no
 - set PasswordAuthentication no
-- Use keys only
+- Keys only
 
 <br>
 
