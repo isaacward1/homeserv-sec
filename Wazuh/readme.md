@@ -1,4 +1,4 @@
-### [Wazuh Documentation](https://documentation.wazuh.com/current/index.html)
+### [Documentation](https://documentation.wazuh.com/current/index.html)
 
 ## Install
     curl -sO https://packages.wazuh.com/4.9/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
