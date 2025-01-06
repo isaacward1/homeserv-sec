@@ -12,7 +12,7 @@
 
 5. Navigate to https://<server ip>:8843
 
-6. Select Nessus Essentials Trial, Enter Activation Key
+6. Select Nessus Essentials Trial, enter activation key
 
 7. Wait 7 hours for plugins to install
 
