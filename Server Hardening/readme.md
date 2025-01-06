@@ -1,11 +1,27 @@
-## UFW Rules
+## Firewall Configuration
+    sudo ufw enable
     sudo ufw allow proto tcp from {client local IP} to any port 22,445 comment 'ssh, samba'
     sudo ufw allow proto tcp from {client local IP} to any port 8000,8834,8444 comment 'splunk, nessus, wazuh'
+    # Default: deny (incoming), allow (outgoing), disabled (routed)
 
 <br>
 
-## Netplan
-...
+## Blacklist malicious IPs
+    sudo apt install fail2ban
+    sudo systemctl start fail2ban && sudo systemctl enable fail2ban
+
+
+<br>
+
+## Home folder encryption
+    
+    sudo apt-get install ecryptfs-utils cryptsetup
+    sudo useradd -G sudo tempuser
+    su tempuser
+    sudo ecryptfs-migrate-home -u {username}
+    exit
+    sudo ecryptfs-setup-swap
+    sudo rm -rf /home/{username}.*
 
 <br>
 
@@ -16,8 +32,15 @@
         MaxAuthTries 3
         PasswordAuthentication no
 
-- PubkeyAuthentication only
+- Public key auth:
 
+      ssh-keygen -t rsa -b 4096
+      ssh-copy-id {username}@{server IP}
+
+      # on server
+      sudo cp ~/.ssh/authorized_keys /etc/ssh/authorized_keys
+      cd /etc/ssh/ && sudo chown {username}:{username} authorized_keys
+        
 <br>
 
 ## SMB
@@ -53,7 +76,7 @@
 
 ## Crontab
     # Daily update
-    0 0 * * * sudo apt-get update && sudo apt-get upgrade -y
+    0 0 * * * sudo apt update && sudo apt upgrade && sudo apt autoremove --purge && sudo apt autoclean -y
 
     # Weekly backup
     0 4 * * 1 currdate=$(date "+%d/%m/%Y") && 7z a -snl /var/backups/homebkp-{$currdate}.7z /home/
