@@ -24,8 +24,9 @@ interface=eno1
 
 192.168.1.0/24  Local network
 
+<br>
 
-Add User To 'Zeek' Group
+## Add User To 'zeek' Group
 
 > sudo usermod -aG zeek $USER  
 > ogout, log back in
@@ -33,20 +34,19 @@ Add User To 'Zeek' Group
 <br>
 
 ## Start Zeek
-
 > cd $PREFIX/bin && sudo ./zeekctl  
 [ZeekControl] >  install  
 [ZeekControl] >  start
+
+<br>
 
 ## Stop Zeek
 > [ZeekControl] > stop  
 > [ZeekControl] > exit
 
+<br>
+
 ## Reviewing Logs
 > cd $PREFIX/logs/{date}
 > sudo gzip -d {file.log.gz}
 > cat {file.log}
-    
-
-    
-    
