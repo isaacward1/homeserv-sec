@@ -5,17 +5,47 @@
     sudo apt update
     sudo apt install zeek
     # No postfix configuration
+    
+<br>
 
-# Setup
+## Config
 
-    sudo echo zeekdir='/opt/zeek' >> /etc/environment
+    sudo echo PREFIX='/opt/zeek' >> /etc/environment
     source /etc/environment
-    sudo nano $zeekdir/etc/node.cfg
-        [zeek]
-        type=standalone
-        host=localhost
-        interface=eno1
+    
+> sudo nano $PREFIX/etc/node.cfg
 
+[zeek]  
+type=standalone  
+host=localhost  
+interface=eno1
+
+> sudo nano $PREFIX/etc/networks.cfg
+
+192.168.1.0/24  Local network
+
+
+Add User To 'Zeek' Group
+
+> sudo usermod -aG zeek $USER  
+> ogout, log back in
+
+<br>
+
+## Start Zeek
+
+> cd $PREFIX/bin && sudo ./zeekctl  
+[ZeekControl] >  install  
+[ZeekControl] >  start
+
+## Stop Zeek
+> [ZeekControl] > stop  
+> [ZeekControl] > exit
+
+## Reviewing Logs
+> cd $PREFIX/logs/{date}
+> sudo gzip -d {file.log.gz}
+> cat {file.log}
     
 
     
