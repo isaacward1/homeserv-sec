@@ -12,44 +12,63 @@
 
     sudo echo PREFIX='/opt/zeek' >> /etc/environment
     source /etc/environment
+
+#### Changing interface and network scope
+    sudo nano $PREFIX/etc/node.cfg
     
-> sudo nano $PREFIX/etc/node.cfg
-
-[zeek]  
-type=standalone  
-host=localhost  
-interface=eno1
-
-> sudo nano $PREFIX/etc/networks.cfg
-
+    [zeek]  
+    type=standalone  
+    host=localhost  
+    interface=eno1 *   
+    
+```
+sudo nano $PREFIX/etc/networks.cfg
+        
 192.168.1.0/24  Local network
+```
+
+#### Add User To 'zeek' Group  
+    sudo usermod -aG zeek $USER     # logout, log back in
 
 <br>
 
-## Add User To 'zeek' Group
-
-> sudo usermod -aG zeek $USER  
-> ogout, log back in
-
-<br>
-
-## Start Zeek
-> cd $PREFIX/bin && sudo ./zeekctl  
+## Start/Stop Zeek
+#### Start
+```
+cd $PREFIX/bin && sudo ./zeekctl  
 [ZeekControl] >  install  
 [ZeekControl] >  start
-
-<br>
-
-## Stop Zeek
-> [ZeekControl] > stop  
-> [ZeekControl] > exit
+```
+#### Stop
+```
+[ZeekControl] > stop  
+[ZeekControl] > exit
+```
 
 <br>
 
 ## Reviewing Logs
-> cd $PREFIX/logs/{date}  <-- 'current' if zeek is running  
-> sudo gzip -d {file.log.gz}  
-> cat {file.log}
+```
+cd $PREFIX/logs/{date}    # 'current' if zeek is running  
+sudo gzip -d {file.log.gz}
+tail -n +7 {file.log} | cut -d $'\t' -f {column numbers}     # ex: tail -n +7 C98XEG~9.LOG | cut -d $'\t' -f 3-6 (row uid, source port, dest port)
+```
 
-conn*.log = All connections seen within the monitored network scope. Fields include timestamp, source(orig) IP, destination(resp) IP, ports, services, protocols
-"Contains an entry for every connection seen on the wire, with basic properties such as time and duration, originator and responder IP addresses, services and ports, payload size, and much more. This log provides a comprehensive record of the network’s activity."
+- conn*.log: All connections seen within the monitored network scope. Fields include timestamp, source(orig) IP, destination(resp) IP, ports, services, protocols, bytes transmitted/recieved, etc.
+- known_services*.log: Application and protocol services observed on then network by zeek
+- weird*.log: Unusual activity (e.g. malformed packets, port-traffic mismatch, detected malfunctions)
+
+#### Single record
+    cat {file.log} | grep {uid of record}
+
+<br>
+
+## Formatting Logs with zeekcut
+...
+
+<br>
+
+## Splunk Integration
+...
+
+
