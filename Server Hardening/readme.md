@@ -79,4 +79,4 @@
     0 0 * * * sudo apt update && sudo apt upgrade && sudo apt autoremove --purge && sudo apt autoclean -y
 
     # Weekly backup
-    0 4 * * 1 currdate=$(date "+%d/%m/%Y") && 7z a -snl /var/backups/homebkp-{$currdate}.7z /home/
+    0 4 * * 1 currdate=$(date "+%d/%m/%Y") && rm /var/backups/homebkp*.7z && 7z a -snl /var/backups/homebkp-{$currdate}.7z /home/
