@@ -1,8 +1,15 @@
-## Firewall Configuration
-    sudo ufw enable
-    sudo ufw allow proto tcp from {client local IP} to any port 22,445 comment 'ssh, samba'
-    sudo ufw allow proto tcp from {client local IP} to any port 8000,8834,8444 comment 'splunk, nessus, wazuh'
-    # Default: deny (incoming), allow (outgoing), disabled (routed)
+## Firewall (ufw) Configuration
+
+    Status: active
+    Logging: off
+    Default: deny (incoming), allow (outgoing), disabled (routed)
+    New profiles: skip
+    
+    To                         Action      From
+    --                         ------      ----
+    22,445/tcp                 ALLOW IN    {client local IP}               # ssh, smb
+    8000,8444,8834/tcp         ALLOW IN    {client local IP}               # splunk, nessus, wazuh
+    1514,1515/tcp              ALLOW IN    {client local IP}               # wazuh agent comm
 
 <br>
 
