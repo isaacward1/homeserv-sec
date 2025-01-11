@@ -7,26 +7,17 @@
 
 <br>
 
-## Dashboard (https://{server IP}:8444/)
-### Changing dashboard access port
+## Changing dashboard access port
     sudo vim /etc/wazuh-dashboard/opensearch_dashboards.yml
     
     # server.port: 8444 <--- change this
-
-    ufw allow from {server IP}/24 to any port 8444 comment 'wazuh dash local access'
+    
     sudo systemctl restart wazuh-dashboard
 
-### Adding Agents
-1. Server Management >> Endpoints Summary >> Deploy New Agent
-2. Copy (a):
-    
-       Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.9.2-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='{server IP}' WAZUH_AGENT_NAME='Windows_Dummy'
+<br>
 
-       NET START WazuhSvc
-
-4. On Windows Client:
-- Windows + R, "powershell.exe", Ctrl+Shift+Enter
-- Paste (a) into PowerShell Terminal
+## Opening ports
+    sudo ufw proto tcp allow from {client local IP} to any port 1514,1515,8444 comment 'wazuh'
 
 <br>
 
@@ -36,5 +27,24 @@
     sudo systemctl restart wazuh-dashboard filebeat
     echo "clear browser cache"
 
-## Opening ports
-    sudo ufw proto tcp allow from {client local IP} to any port 1514,1515,8444 comment 'wazuh ports'
+<br>
+
+## Adding Agent
+1. Navigate to https://{server IP}:8444/
+2. 'Server Management' >> 'Endpoints Summary' >> 'Deploy New Agent'
+3. Select OS (Windows), etc.
+4. Copy (a):
+    
+        Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.10.0-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='{Server IP}' WAZUH_AGENT_GROUP='default' WAZUH_AGENT_NAME='{Agent name}'
+
+        NET START WazuhSvc
+
+5. 
+- Windows + R, "powershell.exe", Ctrl+Shift+Enter
+- Paste (a) into PowerShell Terminal
+
+<br>
+
+## Applying Patches to [Vulnerable Machine](https://github.com/rapid7/metasploitable3)
+...
+    
