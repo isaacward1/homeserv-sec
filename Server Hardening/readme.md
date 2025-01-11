@@ -8,8 +8,9 @@
     To                         Action      From
     --                         ------      ----
     22,445/tcp                 ALLOW IN    {client local IP}               # ssh, smb
-    8000,8444,8834/tcp         ALLOW IN    {client local IP}               # splunk, nessus, wazuh
-    1514,1515/tcp              ALLOW IN    {client local IP}               # wazuh agent comm
+    8834/tcp                   ALLOW IN    {client local IP}               # nessus
+    8000/tcp                   ALLOW IN    {client local IP}               # splunk
+    1514,1515,8444/tcp         ALLOW IN    {client local IP}               # wazuh
 
 <br>
 
