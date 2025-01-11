@@ -7,7 +7,7 @@
     
     To                         Action      From
     --                         ------      ----
-    22,445/tcp                 ALLOW IN    {client local IP}               # ssh, smb
+    22,445/tcp                 ALLOW IN    {client local IP}               # local ssh, smb
     8834/tcp                   ALLOW IN    {client local IP}               # nessus
     8000/tcp                   ALLOW IN    {client local IP}               # splunk
     1514,1515,8444/tcp         ALLOW IN    {client local IP}               # wazuh
