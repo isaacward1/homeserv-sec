@@ -2,12 +2,12 @@
 
 ## Install
     curl -sO https://packages.wazuh.com/4.9/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
-- Copy/save provided password
-- https://{server IP}:8444/
+    # Copy/save provided password
+
 
 <br>
 
-## Dashboard
+## Dashboard (https://{server IP}:8444/)
 ### Changing dashboard access port
     sudo vim /etc/wazuh-dashboard/opensearch_dashboards.yml
     
@@ -35,3 +35,6 @@
     bash wazuh-passwords-tool.sh -u admin -p {new password}
     sudo systemctl restart wazuh-dashboard filebeat
     echo "clear browser cache"
+
+## Opening ports
+    sudo ufw proto tcp allow from {client local IP} to any port 1514,1515,8444 comment 'wazuh ports'
