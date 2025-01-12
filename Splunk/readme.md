@@ -38,12 +38,34 @@
 
 4. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Splunk Dashboard Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
 5. Splunk Dashboard Settings >> Indexes >> New Index >> Index name: 'Zeek' >> Save
-6. Add Forwarder:
 
-   cd /opt/splunk/bin && ./splunk add forward-server {server IP}:9997
-   ./splunk restart
+6. [Download Splunk Forwarder](https://www.splunk.com/en_us/download/universal-forwarder.html)
 
-7. 
+       sudo dpkg -i {splunkforwarder.deb}
+        
+8. Configure forwarding rules
+
+    sudo vim /etc/splunkforwarder/etc/system/local/inputs.conf
+       
+9. Add Forwarder:
+
+       cd /opt/splunk/bin && ./splunk add forward-server {server IP}:9997
+
+       nano /opt/splunkforwarder/etc/system/local/inputs.conf
+   
+       [default]
+       host = {server hostname}
+    
+       [monitor:///opt/zeek/logs/current]
+       _TCP_ROUTING = *
+       index = zeek
+       sourcetype = bro:json
+
+10. Start forwarder
+
+    cd /opt/splunkforwarder/bin && ./splunk start
+
+11. 
 
 <br>
 
