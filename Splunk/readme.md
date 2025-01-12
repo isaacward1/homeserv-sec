@@ -25,7 +25,19 @@
 <br>
 
 ## Zeek Integration
-...
+1. Change zeek .log formatting to JSON (default = tsv)
+
+       sudo vim /opt/zeek/share/zeek/site/local.zeek
+
+       @load policy/tuning/json-logs <-- append this to the bottom
+
+2. On splunk dashboard: Settings >> Forwarding and Recieving >> Receive data >> (+) Add New >> Listen on this port: 9997 >> Save
+3. Allow through firewall:
+
+        sudo ufw allow proto tcp from {local IP subnet} to any port 9997 comment 'splunk reciever 1'
+
+4. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
+5. 
 
 <br>
 
