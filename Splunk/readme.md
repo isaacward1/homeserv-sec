@@ -31,13 +31,19 @@
 
        @load policy/tuning/json-logs <-- append this to the bottom
 
-2. On splunk dashboard: Settings >> Forwarding and Recieving >> Receive data >> (+) Add New >> Listen on this port: 9997 >> Save
+2. Splunk Dashboard Settings >> Forwarding and Recieving >> Receive data >> (+) Add New >> Listen on this port: 9997 >> Save
 3. Allow through firewall:
 
         sudo ufw allow proto tcp from {local IP subnet} to any port 9997 comment 'splunk reciever 1'
 
-4. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
-5. 
+4. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Splunk Dashboard Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
+5. Splunk Dashboard Settings >> Indexes >> New Index >> Index name: 'Zeek' >> Save
+6. Add Forwarder:
+
+   cd /opt/splunk/bin && ./splunk add forward-server {server IP}:9997
+   ./splunk restart
+
+7. 
 
 <br>
 
