@@ -2,7 +2,7 @@
 #### Add User to 'splunk' group
     sudo usermod -aG splunk $USER  # logout/in
 
-#### Allow 'splunk' group to access var directory
+#### Permissions
     sudo chown -R splunk:splunk /opt/splunk/var
 
 #### Change splunk mgmt IP
@@ -13,6 +13,19 @@
         * mgmtHostPort=0.0.0.0:8089
     
     sudo ./splunk restart
+
+#### Fix 'Bad regex value: '([\r\n+)', of param: props.conf / [Zeek_conn_log]...' error
+    sudo nano /opt/splunk/etc/apps/search/local/props.conf
+
+    [Zeek_conn_log]
+    DATETIME_CONFIG = 
+    LINE_BREAKER = ([\r\n+) <-- append ']'
+    NO_BINARY_CHECK = true
+    category = Custom
+    pulldown_type = true
+
+
+    
 
 #### Allow local access to splunk dashboard
     sudo ufw allow from 192.168.1.0/24 to any port 8000 comment 'splunk local access'
@@ -32,25 +45,29 @@
 
        sudo vim /opt/zeek/share/zeek/site/local.zeek
 
-       @load policy/tuning/json-logs <-- append this to the bottom
+       @load policy/tuning/json-logs.zeek <-- append this to the bottom
 
-2. Splunk Dashboard Settings >> Forwarding and Recieving >> Receive data >> (+) Add New >> Listen on this port: 9997 >> Save
-3. Allow through firewall:
+2. Refresh zeek config
+
+       sudo /opt/zeek/bin/zeekctl install
+
+4. Splunk Dashboard Settings >> Forwarding and Recieving >> Receive data >> (+) Add New >> Listen on this port: 9997 >> Save
+5. Allow through firewall:
 
         sudo ufw allow proto tcp from {local IP subnet} to any port 9997 comment 'splunk reciever 1'
 
-4. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Splunk Dashboard Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
-5. Splunk Dashboard Settings >> Indexes >> New Index >> Index name: 'Zeek' >> Save
+6. Add 'TA for Zeek' (A Splunk Add-on for Zeek): Splunk Dashboard Apps >> Find More Apps >> search: 'TA for Zeek' >> Install
+7. Splunk Dashboard Settings >> Indexes >> New Index >> Index name: 'Zeek' >> Save
 
-6. [Download Splunk Forwarder](https://www.splunk.com/en_us/download/universal-forwarder.html)
+8. [Download Splunk Forwarder](https://www.splunk.com/en_us/download/universal-forwarder.html)
 
        sudo dpkg -i {splunkforwarder.deb}
         
-8. Configure forwarding rules
+9. Configure forwarding rules
 
     sudo vim /etc/splunkforwarder/etc/system/local/inputs.conf
        
-9. Add Forwarder:
+10. Add Forwarder:
 
        cd /opt/splunk/bin && ./splunk add forward-server {server IP}:9997
 
@@ -64,11 +81,11 @@
        index = zeek
        sourcetype = bro:json
 
-10. Start forwarder
+11. Start forwarder
 
     cd /opt/splunkforwarder/bin && ./splunk start
 
-11. 
+12. 
 
 <br>
 
