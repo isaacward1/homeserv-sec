@@ -2,7 +2,7 @@
 #### Add User to 'splunk' group
     sudo usermod -aG splunk $USER  # logout/in
 
-#### Allow splunk group to access var
+#### Allow 'splunk' group to access var directory
     sudo chown -R splunk:splunk /opt/splunk/var
 
 #### Change splunk mgmt IP
