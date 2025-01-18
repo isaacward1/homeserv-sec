@@ -5,6 +5,7 @@ A public journal for documenting the installation process, configuration, and ma
 <br>
 
 ### To-Do
+- ufw local isolation rule
 - Splunk-Zeek integration
 - Using Wazuh to patch vulns in Metasploitable3 VMs
 - Suricata stuff
