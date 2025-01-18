@@ -45,6 +45,6 @@
 
 <br>
 
-## Applying Patches to [Vulnerable Machine](https://github.com/rapid7/metasploitable3)
+## Applying Patches to [Vulnerable Machines](https://github.com/rapid7/metasploitable3)
 ...
     
