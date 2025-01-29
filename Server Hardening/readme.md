@@ -7,10 +7,11 @@
     
     To                         Action      From
     --                         ------      ----
-    22,445/tcp                 ALLOW IN    {client local IP}               # local ssh, smb
-    8834/tcp                   ALLOW IN    {client local IP}               # nessus
-    8000/tcp                   ALLOW IN    {client local IP}               # splunk
-    1514,1515,8444/tcp         ALLOW IN    {client local IP}               # wazuh
+    192.168.1.0/24             DENY OUT    Anywhere                 # local isolation
+    22,445/tcp                 ALLOW IN    192.168.1.X              # local ssh, smb
+    8834/tcp                   ALLOW IN    192.168.1.X              # nessus
+    8000/tcp                   ALLOW IN    192.168.1.X              # splunk
+    1514,1515,8444/tcp         ALLOW IN    192.168.1.X              # wazuh
 
 <br>
 
@@ -57,7 +58,7 @@
         [global]
             smb encrypt = required
             smb ports = 445
-            hosts allow = {client local IP}
+            hosts allow = {192.168.1.X}
             hosts deny = 0.0.0.0/0
             security = user
             ntlmv2-only
