@@ -7,7 +7,6 @@
     
     To                         Action      From
     --                         ------      ----
-    192.168.1.0/24             DENY OUT    Anywhere                 # local isolation
     22,445/tcp                 ALLOW IN    192.168.1.X              # local ssh, smb
     8834/tcp                   ALLOW IN    192.168.1.X              # nessus
     8000/tcp                   ALLOW IN    192.168.1.X              # splunk
