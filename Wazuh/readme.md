@@ -40,7 +40,7 @@
         NET START WazuhSvc
 
 5. 
-- Windows + R, "powershell.exe", Ctrl+Shift+Enter
+- Open PowerShell as Administrator
 - Paste (a) into PowerShell Terminal
 
 <br>
