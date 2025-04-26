@@ -16,9 +16,24 @@
 
 ## Blacklist malicious IPs
     sudo apt install fail2ban
-    sudo systemctl start fail2ban && sudo systemctl enable fail2ban
+    sudo systemctl enable --now fail2ban
+
+<br>
+
+## Unattended Upgrades
+    sudo apt install unattended-upgrades
+    sudo systemctl enable --now unattended-upgrades.service
+
+#### /etc/apt/apt.conf.d/20auto-upgrades:
+
+    APT::Periodic::Update-Package-Lists "1";
+    APT::Periodic::Unattended-Upgrade "1";
+
+#### /etc/apt/apt.conf.d/50unattended-upgrades:
 
 
+
+    
 <br>
 
 ## Home folder encryption
@@ -34,15 +49,15 @@
 <br>
 
 ## SSH
-- sshd_config:
+#### /etc/ssh/sshd_config:
 
         PermitRootLogin no
         MaxAuthTries 3
         PasswordAuthentication no
 
-- Public key auth:
+#### Public key auth:
 
-      ssh-keygen -t rsa -b 4096
+      ssh-keygen -t ed25519
       ssh-copy-id {username}@{server IP}
 
       # on server
@@ -52,7 +67,7 @@
 <br>
 
 ## SMB
-- smb.conf:
+#### /etc/samba/smb.conf:
 
         [global]
             smb encrypt = required
@@ -79,8 +94,7 @@
 <br>
 
 ## Disabling Useless Services
-    sudo systemctl stop cups cups-browsed && sudo systemctl disable cups cups-browsed
-    sudo systemctl stop avahi-daemon.socket avahi-daemon && sudo systemctl disable avahi-daemon.socket avahi-daemon
+    sudo systemctl disable --now cups cups-browsed avahi-daemon.socket avahi-daemon bluetooth.service bluetooth.target 2>/dev/null
 
 ## Crontab
     # Daily update
