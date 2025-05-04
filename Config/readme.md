@@ -7,10 +7,28 @@
     
     To                         Action      From
     --                         ------      ----
-    22,445/tcp                 ALLOW IN    192.168.1.X              # local ssh, smb
-    8834/tcp                   ALLOW IN    192.168.1.X              # nessus
-    8000/tcp                   ALLOW IN    192.168.1.X              # splunk
-    1514,1515,8444/tcp         ALLOW IN    192.168.1.X              # wazuh
+    22,445/tcp                 ALLOW IN    192.168.1.x               # local ssh, smb
+    8834/tcp                   ALLOW IN    192.168.1.x               # nessus
+    8000/tcp                   ALLOW IN    192.168.1.x               # splunk
+    1514,1515,8444/tcp         ALLOW IN    192.168.1.x               # wazuh
+    9997/tcp                   ALLOW IN    192.168.1.x/24            # splunk reciever 1
+    
+    192.168.x.1               ALLOW OUT    192.168.x.1               # outbound
+    192.168.0.0/16             DENY OUT    Anywhere                  
+    172.16.0.0/12              DENY OUT    Anywhere                  
+    10.0.0.0/8                 DENY OUT    Anywhere 
+
+<br>
+
+## Disable IPv6 Systemwide
+#### /etc/sysctl.conf
+
+    net.ipv6.conf.all.disable_ipv6 = 1
+    net.ipv6.conf.default.disable_ipv6 = 1
+    net.ipv6.conf.lo.disable_ipv6 = 1
+<br>
+
+    sudo sysctl -p
 
 <br>
 
@@ -32,8 +50,6 @@
 #### /etc/apt/apt.conf.d/50unattended-upgrades:
     ...
 
-
-    
 <br>
 
 ## Home folder encryption
@@ -51,43 +67,43 @@
 ## SSH
 #### /etc/ssh/sshd_config:
 
-        PermitRootLogin no
-        MaxAuthTries 3
-        PasswordAuthentication no
+    PermitRootLogin no
+    MaxAuthTries 3
+    PasswordAuthentication no
 
 #### Public key auth:
 
-      ssh-keygen -t ed25519
-      ssh-copy-id {username}@{server IP}
-
-      # on server
-      sudo cp ~/.ssh/authorized_keys /etc/ssh/authorized_keys
-      cd /etc/ssh/ && sudo chown {username}:{username} authorized_keys
+    ssh-keygen -t ed25519
+    ssh-copy-id {username}@{server IP}
+    
+    # on server
+    sudo cp ~/.ssh/authorized_keys /etc/ssh/authorized_keys
+    cd /etc/ssh/ && sudo chown {username}:{username} authorized_keys
         
 <br>
 
 ## SMB
 #### /etc/samba/smb.conf:
 
-        [global]
-            smb encrypt = required
-            smb ports = 445
-            hosts allow = {192.168.1.X}
-            hosts deny = 0.0.0.0/0
-            security = user
-            ntlmv2-only
-            smb protocol = SMB3_11
-            server min protocol = SMB3_11
-            client min protocol = SMB3_11
-            restrict anonymous = 2
-            load printers = no
-            disable spoolss = yes
-            printing = bsd
+    [global]
+        smb encrypt = required
+        smb ports = 445
+        hosts allow = {192.168.1.X}
+        hosts deny = 0.0.0.0/0
+        security = user
+        ntlmv2-only
+        smb protocol = SMB3_11
+        server min protocol = SMB3_11
+        client min protocol = SMB3_11
+        restrict anonymous = 2
+        load printers = no
+        disable spoolss = yes
+        printing = bsd
     
-        [{share name}]
-           path = /home/{username}/{share folder path}
-           browsable = no
-           valid users = {username}
+    [{share name}]
+       path = /home/{username}/{share folder path}
+       browsable = no
+       valid users = {username}
 
 
 
