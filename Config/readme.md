@@ -7,7 +7,7 @@
     
     To                         Action      From
     --                         ------      ----
-    22,445/tcp                 ALLOW IN    192.168.1.28               # inbound local ssh, smb
+    40022,445/tcp              ALLOW IN    192.168.1.28               # inbound local ssh, smb
     8834/tcp                   ALLOW IN    192.168.1.28               # nessus
     8000/tcp                   ALLOW IN    192.168.1.28               # splunk
     1514,1515,8444/tcp         ALLOW IN    192.168.1.28               # wazuh
@@ -67,6 +67,7 @@
 ## SSH
 #### /etc/ssh/sshd_config:
 
+    Port 40022
     PermitRootLogin no
     MaxAuthTries 3
     MaxSessions 2
