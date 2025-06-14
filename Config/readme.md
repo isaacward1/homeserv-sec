@@ -11,9 +11,9 @@
     8834/tcp                   ALLOW IN    192.168.1.28               # nessus
     8000/tcp                   ALLOW IN    192.168.1.28               # splunk
     1514,1515,8444/tcp         ALLOW IN    192.168.1.28               # wazuh
-    9997/tcp                   ALLOW IN    192.168.1.x/24            # splunk reciever 1
+    9997/tcp                   ALLOW IN    192.168.1.x/24             # splunk reciever 1
     
-    192.168.1.28               ALLOW OUT    192.168.1.30               # outbound
+    192.168.1.28               ALLOW OUT   192.168.1.30               # outbound
     192.168.0.0/16             DENY OUT    Anywhere                  
     172.16.0.0/12              DENY OUT    Anywhere                  
     10.0.0.0/8                 DENY OUT    Anywhere 
