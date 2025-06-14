@@ -116,3 +116,6 @@
 ## Crontab
     # Weekly backup
     0 4 * * 1 currdate=$(date "+%d/%m/%Y") && rm /var/backups/homebkp*.7z && 7z a -snl /var/backups/homebkp-{$currdate}.7z /home/
+
+    # Clean up
+    0 2 * * * apt autoremove --purge && apt autoclean -y
