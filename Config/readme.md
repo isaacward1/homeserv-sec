@@ -69,6 +69,7 @@
 
     PermitRootLogin no
     MaxAuthTries 3
+    MaxSessions 2
     PasswordAuthentication no
 
 #### Public key auth:
