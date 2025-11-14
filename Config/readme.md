@@ -1,4 +1,4 @@
-## Firewall (ufw) Configuration
+### Firewall (ufw) Configuration
 
     Status: active
     Logging: off
@@ -20,27 +20,28 @@
 
 <br>
 
-## Disable IPv6 Systemwide
+### Disable IPv6 Systemwide
 #### /etc/sysctl.conf:
 
     net.ipv6.conf.all.disable_ipv6 = 1
     net.ipv6.conf.default.disable_ipv6 = 1
     net.ipv6.conf.lo.disable_ipv6 = 1
-<br>
 
-    sudo sysctl -p
-
-<br>
-
-## Blacklist malicious IPs
-    sudo apt install fail2ban
-    sudo systemctl enable --now fail2ban
+> sudo sysctl -p
 
 <br>
 
-## Unattended Upgrades
-    sudo apt install unattended-upgrades
-    sudo systemctl enable --now unattended-upgrades.service
+### Blacklist malicious IPs
+> sudo apt install fail2ban
+> 
+> sudo systemctl enable --now fail2ban
+
+<br>
+
+### Unattended Upgrades
+> sudo apt install unattended-upgrades
+> 
+> sudo systemctl enable --now unattended-upgrades.service
 
 #### /etc/apt/apt.conf.d/20auto-upgrades:
 
@@ -52,19 +53,25 @@
 
 <br>
 
-## Home folder encryption
+### Home folder encryption
     
-    sudo apt-get install ecryptfs-utils cryptsetup
-    sudo useradd -G sudo tempuser
-    su tempuser
-    sudo ecryptfs-migrate-home -u {username}
-    exit
-    sudo ecryptfs-setup-swap
-    sudo rm -rf /home/{username}.*
+> sudo apt-get install ecryptfs-utils cryptsetup
+> 
+> sudo useradd -G sudo tempuser
+> 
+> su tempuser
+> 
+> sudo ecryptfs-migrate-home -u {username}
+> 
+> exit
+> 
+> sudo ecryptfs-setup-swap
+> 
+> sudo rm -rf /home/{username}
 
 <br>
 
-## SSH
+### SSH
 #### /etc/ssh/sshd_config:
 
     Port 40022
@@ -84,7 +91,7 @@
         
 <br>
 
-## SMB
+### SMB
 #### /etc/samba/smb.conf:
 
     [global]
@@ -110,10 +117,12 @@
 
 <br>
 
-## Disabling Useless Services
-    sudo systemctl disable --now cups cups-browsed avahi-daemon.socket avahi-daemon bluetooth.service bluetooth.target 2>/dev/null
+### Disabling Useless Services
+> sudo systemctl disable --now cups cups-browsed avahi-daemon.socket avahi-daemon bluetooth.service bluetooth.target 2>/dev/null
 
-## Crontab
+<br>
+
+### Crontab
     # Weekly backup
     0 4 * * 1 currdate=$(date "+%d/%m/%Y") && rm /var/backups/homebkp*.7z && 7z a -snl /var/backups/homebkp-{$currdate}.7z /home/
 
